@@ -111,5 +111,29 @@ namespace PaginaPedidos.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-    }
+
+		public IActionResult ProductsByCategory()
+		{
+			var categories = _db.Categorias.ToList();
+
+			var productsByCategory = new Dictionary<string, List<ProductDTO>>();
+
+			foreach (var category in categories)
+			{
+				var products = new List<ProductDTO>();
+
+				foreach (var product in _db.Products)
+				{
+					if (product.CategoriaId == category.Id)
+					{
+						products.Add(_mapper.Map<ProductDTO>(product));
+					}
+				}
+
+				productsByCategory.Add(category.Nombre, products);
+			}
+
+			return View(productsByCategory);
+		}
+	}
 }
