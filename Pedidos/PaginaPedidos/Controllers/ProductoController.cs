@@ -132,7 +132,6 @@ namespace PaginaPedidos.Controllers
 
 				productsByCategory.Add(category.Nombre, products);
 			}
-
 			return View(productsByCategory);
 		}
 	}
